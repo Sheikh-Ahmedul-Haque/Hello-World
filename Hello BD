@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelloBD - Hello Bangladesh</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px #00000012;
+    }
+
+    h1 {
+      color: #2563eb;
+      text-align: center;
+    }
+
+    p {
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 150px;
+      padding: 14px;
+      font-family: monospace;
+      font-size: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #output {
+      background: #0f172a;
+      color: #86efac;
+      padding: 16px;
+      min-height: 55px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>HelloBD</h1>
+
+    <p>
+      Welcome to HelloBD, a simple experimental
+      page to visit Bangladesh.
+    </p>
+
+    <p>Write your program below:</p>
+
+    <textarea id="code" spellcheck="false">print("Hello World!")</textarea>
+
+    <br>
+    <button id="runButton" type="button">Run Program</button>
+
+    <h3>Output</h3>
+    <pre id="output">Your output will appear here.</pre>
+
+    <p>Syntax: print("Your message")</p>
+  </main>
+
+  <script>
+    function runProgram() {
+      const code = document.getElementById("code").value;
+      const output = document.getElementById("output");
+
+      const lines = code.split(/\r?\n/);
+      const results = [];
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+
+        if (trimmed === "" || trimmed.startsWith("#")) {
+          continue;
+        }
+
+        const match = trimmed.match(
+          /^print\(\s*(["'])(.*?)\1\s*\);?$/
+        );
+
+        if (match) {
+          results.push(match[2]);
+        } else {
+          output.textContent =
+            "Syntax Error: " + trimmed;
+          return;
+        }
+      }
+
+      output.textContent = results.join("\n") || "(No output)";
+    }
+
+    document
+      .getElementById("runButton")
+      .addEventListener("click", runProgram);
+  </script>
+</body>
+</html>
